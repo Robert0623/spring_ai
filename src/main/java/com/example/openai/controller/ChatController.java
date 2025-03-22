@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
 // client의 요청을 받아서 json 형식으로 응답
 @RestController
 public class ChatController {
@@ -47,5 +50,15 @@ public class ChatController {
     @GetMapping("/recipe")
     public Answer recipe(String foodName, String question) {
         return chatService.recipe(foodName, question);
+    }
+
+    @GetMapping("/chatlist")
+    public List<String> chatlist(String message) {
+        return chatService.chatlist(message);
+    }
+
+    @GetMapping("/chatmap")
+    public Map<String, String> chatmap(String message) {
+        return chatService.chatmap(message);
     }
 }

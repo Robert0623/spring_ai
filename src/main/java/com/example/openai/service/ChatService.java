@@ -1,6 +1,7 @@
 package com.example.openai.service;
 
 import com.example.openai.entity.Answer;
+import com.example.openai.entity.Movie;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.converter.ListOutputConverter;
@@ -90,5 +91,21 @@ public class ChatService {
                 .user(message)
                 .call()
                 .entity(new ParameterizedTypeReference<Map<String, String>>() {});
+    }
+
+    public List<Movie> chatmovie(String directorName) {
+        String template = """
+                "Generate a list of movies directed by {directorName}. If the director is unknown, return null.
+                한국 영화는 한글로 표기해줘
+                Each movie should include a title and release year. {format}"
+                """;
+        List<Movie> movieList = chatClient.prompt()
+                .user(userSpec -> userSpec.text(template)
+                        .param("directorName", directorName)
+                        .param("format", "json")
+                )
+                .call()
+                .entity(new ParameterizedTypeReference<List<Movie>>() {});
+        return movieList;
     }
 }

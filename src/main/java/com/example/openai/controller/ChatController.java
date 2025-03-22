@@ -25,4 +25,9 @@ public class ChatController {
     public String chatmessage(@RequestParam("message") String message) {
         return chatService.chatmessage(message);
     }
+
+    @GetMapping("/chatplace")
+    public String chatplace(String subject, String tone, String message) {
+        return chatService.chatplace(subject, tone, message);
+    }
 }
